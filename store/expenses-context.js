@@ -62,15 +62,15 @@ const expensesReducer = (state, action) => {
         (expense) => expense.id === action.payload.id
       );
       const updatableExpense = state[updatableExpenseIndex];
-      const updatableItem = {
+      const updatedItem = {
         ...updatableExpense,
         ...action.payload.expenseData,
       };
       const updatedExpenses = [...state];
-      updatedExpenses[updatableExpenseIndex] = updatableItem;
+      updatedExpenses[updatableExpenseIndex] = updatedItem;
       return updatedExpenses;
     case "DELETE":
-      return state.filter((expense) => state.id !== action.payload);
+      return state.filter((expense) => expense.id !== action.payload);
     default:
       return state;
   }
@@ -88,7 +88,7 @@ const ExpensesContextProvider = ({ children }) => {
   };
 
   const updateExpense = (id, expenseData) => {
-    dispatch({ type: "ADD", payload: { id, expenseData } });
+    dispatch({ type: "UPDATE", payload: { id, expenseData } });
   };
 
   const value = {
