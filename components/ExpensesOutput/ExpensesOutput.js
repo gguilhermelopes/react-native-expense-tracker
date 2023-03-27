@@ -29,7 +29,7 @@ const EXPENSES = [
     date: new Date("2023-03-20"),
   },
   {
-    id: "e4",
+    id: "e5",
     description: "HAND.CANNOT.ERASE. album",
     amount: 15.99,
     date: new Date("2022-12-15"),
@@ -40,7 +40,7 @@ const ExpensesOutput = ({ expenses, expensesPeriod }) => {
   return (
     <View>
       <ExpensesSummary expenses={EXPENSES} expensesPeriod={expensesPeriod} />
-      <ExpensesList />
+      <ExpensesList expenses={EXPENSES} />
     </View>
   );
 };
