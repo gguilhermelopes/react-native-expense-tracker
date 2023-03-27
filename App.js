@@ -84,7 +84,7 @@ export default function App() {
   return (
     <>
       <SafeAreaView onLayout={onLayoutRootView} style={styles.rootScreen}>
-        <StatusBar style="auto" />
+        <StatusBar style="light" />
         <NavigationContainer>
           <Stack.Navigator>
             <Stack.Screen

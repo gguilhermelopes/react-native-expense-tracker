@@ -4,6 +4,7 @@
     "slug": "react-native-expense-tracker",
     "version": "1.0.0",
     "orientation": "portrait",
+    "backgroundColor": "#221c30",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
     "splash": {
@@ -11,9 +12,7 @@
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": true
     },
