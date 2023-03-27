@@ -21,10 +21,16 @@ const ExpensesOverview = () => {
   return (
     <BottomTabs.Navigator
       screenOptions={({ navigation }) => ({
-        headerStyle: { backgroundColor: GlobalStyles.colors.primary800 },
+        headerStyle: {
+          backgroundColor: GlobalStyles.colors.primary800,
+          borderBottomColor: "transparent",
+        },
         headerTitleStyle: { fontFamily: "dm-sans-bold" },
         headerTintColor: GlobalStyles.colors.primary25,
-        tabBarStyle: { backgroundColor: GlobalStyles.colors.primary800 },
+        tabBarStyle: {
+          backgroundColor: GlobalStyles.colors.primary800,
+          borderTopColor: "transparent",
+        },
         tabBarBadgeStyle: { fontFamily: "dm-sans-bold" },
         tabBarInactiveTintColor: GlobalStyles.colors.primary25,
         tabBarActiveTintColor: GlobalStyles.colors.accent500,
@@ -95,7 +101,13 @@ export default function App() {
       <SafeAreaView onLayout={onLayoutRootView} style={styles.rootScreen}>
         <StatusBar style="light" />
         <NavigationContainer>
-          <Stack.Navigator>
+          <Stack.Navigator
+            screenOptions={{
+              headerStyle: { backgroundColor: GlobalStyles.colors.primary400 },
+              headerTitleStyle: { fontFamily: "dm-sans-bold" },
+              headerTintColor: GlobalStyles.colors.primary25,
+            }}
+          >
             <Stack.Screen
               name="ExpensesOverview"
               component={ExpensesOverview}
@@ -103,7 +115,11 @@ export default function App() {
                 headerShown: false,
               }}
             />
-            <Stack.Screen name="ManageExpense" component={ManageExpense} />
+            <Stack.Screen
+              name="ManageExpense"
+              component={ManageExpense}
+              options={{ presentation: "modal" }}
+            />
           </Stack.Navigator>
         </NavigationContainer>
       </SafeAreaView>
