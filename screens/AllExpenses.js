@@ -10,7 +10,11 @@ const AllExpenses = () => {
   );
 
   return (
-    <ExpensesOutput expenses={dateSortedExpenses} expensesPeriod="Total" />
+    <ExpensesOutput
+      expenses={dateSortedExpenses}
+      expensesPeriod="Total"
+      fallbackText="No expenses registered!"
+    />
   );
 };
 

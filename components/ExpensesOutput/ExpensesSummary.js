@@ -4,15 +4,18 @@ import { GlobalStyles } from "../../constants/styles";
 
 const ExpensesSummary = ({ expensesPeriod, expenses }) => {
   const expensesSum = expenses.reduce((acc, { amount }) => acc + amount, 0);
+
   return (
     <View style={styles.container}>
       <Text style={styles.periodText}>{expensesPeriod}</Text>
-      <Text style={styles.sumText}>
-        {expensesSum.toLocaleString("en-US", {
-          style: "currency",
-          currency: "USD",
-        })}
-      </Text>
+      {
+        <Text style={styles.sumText}>
+          {expensesSum.toLocaleString("en-US", {
+            style: "currency",
+            currency: "USD",
+          })}
+        </Text>
+      }
     </View>
   );
 };
