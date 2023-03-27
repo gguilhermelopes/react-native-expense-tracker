@@ -2,15 +2,19 @@ import { Pressable, StyleSheet, Text, View } from "react-native";
 import { GlobalStyles } from "../../constants/styles";
 
 const ExpenseItem = ({ description, date, amount }) => {
+  const handleItemPress = () => {};
   return (
-    <Pressable>
+    <Pressable
+      style={({ pressed }) => pressed && styles.pressed}
+      onPress={handleItemPress}
+    >
       <View style={styles.expenseItemContainer}>
         <View>
           <Text style={[styles.textBase, styles.descriptionText]}>
             {description}
           </Text>
           <Text style={styles.textBase}>
-            {date.toLocaleDateString("en-GB")}
+            {date.toLocaleDateString("pt-BR").replaceAll("/", "-")}
           </Text>
         </View>
         <View style={styles.amountContainer}>
@@ -63,5 +67,8 @@ const styles = StyleSheet.create({
   amountText: {
     color: GlobalStyles.colors.primary700,
     fontFamily: "dm-sans-bold",
+  },
+  pressed: {
+    opacity: 0.75,
   },
 });
