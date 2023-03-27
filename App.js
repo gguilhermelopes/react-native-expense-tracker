@@ -22,10 +22,10 @@ const ExpensesOverview = () => {
       screenOptions={{
         headerStyle: { backgroundColor: GlobalStyles.colors.primary500 },
         headerTitleStyle: { fontFamily: "dm-sans-bold" },
-        headerTintColor: GlobalStyles.colors.primary50,
+        headerTintColor: GlobalStyles.colors.primary25,
         tabBarStyle: { backgroundColor: GlobalStyles.colors.primary500 },
         tabBarBadgeStyle: { fontFamily: "dm-sans-bold" },
-        tabBarInactiveTintColor: GlobalStyles.colors.primary50,
+        tabBarInactiveTintColor: GlobalStyles.colors.primary25,
         tabBarActiveTintColor: GlobalStyles.colors.accent500,
       }}
     >
