@@ -24,7 +24,7 @@ export default Button;
 const styles = StyleSheet.create({
   button: {
     borderRadius: 4,
-    padding: 8,
+    padding: 16,
     backgroundColor: GlobalStyles.colors.primary500,
   },
   flat: {
