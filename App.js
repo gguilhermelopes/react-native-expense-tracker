@@ -12,7 +12,7 @@ import ManageExpense from "./screens/ManageExpense";
 import RecentExpenses from "./screens/RecentExpenses";
 import AllExpenses from "./screens/AllExpenses";
 import { GlobalStyles } from "./constants/styles";
-import IconButton from "./components/ExpensesOutput/UI/IconButton";
+import IconButton from "./components/UI/IconButton";
 
 const Stack = createNativeStackNavigator();
 const BottomTabs = createBottomTabNavigator();
@@ -36,7 +36,7 @@ const ExpensesOverview = () => {
         tabBarActiveTintColor: GlobalStyles.colors.accent500,
         headerRight: ({ tintColor }) => (
           <IconButton
-            icon="add"
+            name="add"
             size={24}
             color={tintColor}
             onPress={() => navigation.navigate("ManageExpense")}
