@@ -19,7 +19,6 @@ const ManageExpense = ({ route, navigation }) => {
   }, [navigation, isEditing]);
 
   const deleteExpenseHandler = () => {
-    expensesContext.deleteExpense(expenseId);
     Alert.alert(
       "Are you sure?",
       `Do you really want to delete ${expenseDesc}? This can't be undone!`,
@@ -32,7 +31,8 @@ const ManageExpense = ({ route, navigation }) => {
           text: "Delete",
           style: "destructive",
           onPress: () => {
-            Alert.alert(`Expense deleted`);
+            expensesContext.deleteExpense(expenseId);
+            Alert.alert("Expense deleted");
             navigation.goBack();
           },
         },
