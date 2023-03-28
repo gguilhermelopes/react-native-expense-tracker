@@ -24,7 +24,7 @@ const ExpenseForm = ({ onCancel, onSubmit, isEditing }) => {
 
   const submitHandler = () => {
     const expenseData = {
-      amount: +inputValues.amount,
+      amount: +inputValues.amount.replace(",", "."),
       date: new Date(setFormattedDate(inputValues.date)),
       description: inputValues.description,
     };
