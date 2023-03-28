@@ -22,14 +22,14 @@ const ExpenseItem = ({ description, date, amount, id }) => {
             {description}
           </Text>
           <Text style={styles.textBase}>
-            {date.toLocaleDateString("pt-BR").replaceAll("/", "-")}
+            {date.toLocaleDateString("pt-BR")}
           </Text>
         </View>
         <View style={styles.amountContainer}>
           <Text style={[styles.textBase, styles.amountText]}>
-            {amount.toLocaleString("en-US", {
+            {amount.toLocaleString("pt-BR", {
               style: "currency",
-              currency: "USD",
+              currency: "BRL",
             })}
           </Text>
         </View>

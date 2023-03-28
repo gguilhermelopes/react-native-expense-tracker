@@ -10,9 +10,9 @@ const ExpensesSummary = ({ expensesPeriod, expenses }) => {
       <Text style={styles.periodText}>{expensesPeriod}</Text>
       {
         <Text style={styles.sumText}>
-          {expensesSum.toLocaleString("en-US", {
+          {expensesSum.toLocaleString("pt-BR", {
             style: "currency",
-            currency: "USD",
+            currency: "BRL",
           })}
         </Text>
       }

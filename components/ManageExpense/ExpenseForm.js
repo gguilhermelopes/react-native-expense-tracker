@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { StyleSheet, View } from "react-native";
 import { GlobalStyles } from "../../constants/styles";
+import { setFormattedDate } from "../../util/date";
 import Button from "../UI/Button";
 
 import Input from "./Input";
@@ -24,7 +25,7 @@ const ExpenseForm = ({ onCancel, onSubmit, isEditing }) => {
   const submitHandler = () => {
     const expenseData = {
       amount: +inputValues.amount,
-      date: new Date(inputValues.date),
+      date: new Date(setFormattedDate(inputValues.date)),
       description: inputValues.description,
     };
     onSubmit(expenseData);
@@ -45,7 +46,7 @@ const ExpenseForm = ({ onCancel, onSubmit, isEditing }) => {
         <Input
           label="Date"
           textInputConfig={{
-            placeholder: "YYYY-MM-DD",
+            placeholder: "DD/MM/YYYY",
             placeholderTextColor: GlobalStyles.colors.primary200,
             maxLength: 10,
             onChangeText: inputChangeHandler.bind(this, "date"),

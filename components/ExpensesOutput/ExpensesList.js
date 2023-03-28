@@ -1,5 +1,4 @@
 import { StyleSheet, FlatList, Text } from "react-native";
-import React from "react";
 import ExpenseItem from "./ExpenseItem";
 
 const renderExpenseItem = ({ item }) => {
