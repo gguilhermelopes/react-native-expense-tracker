@@ -4,9 +4,11 @@
 ![GitHub language count](https://img.shields.io/github/languages/count/gguilhermelopes/react-native-expense-tracker?style=for-the-badge)
 
 <p align="center" >
-<img src="./doc-imgs/img1.png" alt="exemplo imagem" height="500px" style=margin-right: '20px' >
-<img src="./doc-imgs/img2.png" alt="exemplo imagem" height="500px" style=margin-right: '20px' >
-<img src="./doc-imgs/img3.png" alt="exemplo imagem" height="500px"  >
+<img src="./assets/doc-imgs/img1.png" alt="exemplo imagem" height="500px"  >
+ &nbsp;&nbsp;
+<img src="./assets/doc-imgs/img2.png" alt="exemplo imagem" height="500px"  >
+ &nbsp;&nbsp;
+<img src="./assets/doc-imgs/img3.png" alt="exemplo imagem" height="500px"  >
 
  
 
