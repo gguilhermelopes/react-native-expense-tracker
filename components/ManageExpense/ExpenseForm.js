@@ -1,16 +1,18 @@
 import { useState } from "react";
 import { StyleSheet, View } from "react-native";
+
 import { GlobalStyles } from "../../constants/styles";
 import { setFormattedDate } from "../../util/date";
 import Button from "../UI/Button";
-
 import Input from "./Input";
 
-const ExpenseForm = ({ onCancel, onSubmit, isEditing }) => {
+const ExpenseForm = ({ onCancel, onSubmit, isEditing, defaultValues }) => {
   const [inputValues, setInputValues] = useState({
-    amount: "",
-    date: "",
-    description: "",
+    amount: defaultValues
+      ? defaultValues.amount.toString().replaceAll(".", ",")
+      : "",
+    date: defaultValues ? defaultValues.date.toLocaleDateString("pt-BR") : "",
+    description: defaultValues ? defaultValues.description : "",
   });
 
   const inputChangeHandler = (inputIdentifier, enteredValue) => {
@@ -39,8 +41,8 @@ const ExpenseForm = ({ onCancel, onSubmit, isEditing }) => {
           textInputConfig={{
             keyboardType: "decimal-pad",
             onChangeText: inputChangeHandler.bind(this, "amount"),
+            value: inputValues.amount,
           }}
-          value={inputValues.amount}
           style={styles.amountAndDateInput}
         />
         <Input
@@ -50,8 +52,8 @@ const ExpenseForm = ({ onCancel, onSubmit, isEditing }) => {
             placeholderTextColor: GlobalStyles.colors.primary200,
             maxLength: 10,
             onChangeText: inputChangeHandler.bind(this, "date"),
+            value: inputValues.date,
           }}
-          value={inputValues.date}
           style={styles.amountAndDateInput}
         />
       </View>
@@ -60,8 +62,8 @@ const ExpenseForm = ({ onCancel, onSubmit, isEditing }) => {
         textInputConfig={{
           multiline: true,
           onChangeText: inputChangeHandler.bind(this, "description"),
+          value: inputValues.description,
         }}
-        value={inputValues.description}
       />
       <View style={styles.buttonsContainer}>
         <Button style={styles.button} mode="flat" onPress={onCancel}>
