@@ -1,4 +1,4 @@
-import { Alert, StyleSheet, View } from "react-native";
+import { Alert, StyleSheet, View, Text } from "react-native";
 import { useContext, useLayoutEffect } from "react";
 
 import IconButton from "../components/UI/IconButton";
@@ -62,6 +62,7 @@ const ManageExpense = ({ route, navigation }) => {
 
   return (
     <View style={styles.container}>
+      {expenseDesc && <Text style={styles.title}>{expenseDesc}</Text>}
       <ExpenseForm />
       <View style={styles.buttonsContainer}>
         <Button style={styles.button} mode="flat" onPress={cancelHandler}>
@@ -92,6 +93,12 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 24,
     backgroundColor: GlobalStyles.colors.primary50,
+  },
+  title: {
+    fontFamily: "dm-sans-bold",
+    fontSize: 16,
+    textAlign: "center",
+    color: GlobalStyles.colors.primary700,
   },
   buttonsContainer: {
     flexDirection: "row",
