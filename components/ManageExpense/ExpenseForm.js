@@ -10,7 +10,7 @@ const ExpenseForm = ({ onCancel, onSubmit, isEditing, defaultValues }) => {
   const [inputs, setInputs] = useState({
     amount: {
       value: defaultValues
-        ? defaultValues.amount.toString().replaceAll(".", ",")
+        ? defaultValues.amount.toFixed(2).toString().replaceAll(".", ",")
         : "",
       isValid: true,
     },
@@ -42,7 +42,7 @@ const ExpenseForm = ({ onCancel, onSubmit, isEditing, defaultValues }) => {
       description: inputs.description.value,
     };
 
-    const amountIsValid = !isNaN(expenseData.amount) && expenseData.amount >= 0;
+    const amountIsValid = !isNaN(expenseData.amount) && expenseData.amount > 0;
     const dateIsValid = expenseData.date.toString() !== "Invalid Date";
     const descriptionIsValid = expenseData.description.trim().length > 0;
 
@@ -84,6 +84,7 @@ const ExpenseForm = ({ onCancel, onSubmit, isEditing, defaultValues }) => {
             onChangeText: inputChangeHandler.bind(this, "amount"),
             value: inputs.amount.value,
           }}
+          invalid={!inputs.amount.isValid}
           style={styles.amountAndDateInput}
         />
         <Input
@@ -95,6 +96,7 @@ const ExpenseForm = ({ onCancel, onSubmit, isEditing, defaultValues }) => {
             onChangeText: inputChangeHandler.bind(this, "date"),
             value: inputs.date.value,
           }}
+          invalid={!inputs.date.isValid}
           style={styles.amountAndDateInput}
         />
       </View>
@@ -105,9 +107,12 @@ const ExpenseForm = ({ onCancel, onSubmit, isEditing, defaultValues }) => {
           onChangeText: inputChangeHandler.bind(this, "description"),
           value: inputs.description.value,
         }}
+        invalid={!inputs.description.isValid}
       />
       {formIsInvalid && (
-        <Text>Input values are invalid! Check entered data, please.</Text>
+        <Text style={styles.errorText}>
+          Input values are invalid! Check entered data, please.
+        </Text>
       )}
       <View style={styles.buttonsContainer}>
         <Button style={styles.button} mode="flat" onPress={onCancel}>
@@ -133,6 +138,13 @@ const styles = StyleSheet.create({
   },
   amountAndDateInput: {
     flex: 1,
+  },
+  errorText: {
+    textAlign: "center",
+    fontFamily: "dm-sans",
+    color: GlobalStyles.colors.error500,
+    marginHorizontal: 12,
+    marginBottom: 24,
   },
   buttonsContainer: {
     flexDirection: "row",
