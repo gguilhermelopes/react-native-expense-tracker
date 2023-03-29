@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Alert, StyleSheet, View } from "react-native";
+import { Alert, StyleSheet, Text, View } from "react-native";
 
 import { GlobalStyles } from "../../constants/styles";
 import { setFormattedDate } from "../../util/date";
@@ -7,28 +7,39 @@ import Button from "../UI/Button";
 import Input from "./Input";
 
 const ExpenseForm = ({ onCancel, onSubmit, isEditing, defaultValues }) => {
-  const [inputValues, setInputValues] = useState({
-    amount: defaultValues
-      ? defaultValues.amount.toString().replaceAll(".", ",")
-      : "",
-    date: defaultValues ? defaultValues.date.toLocaleDateString("pt-BR") : "",
-    description: defaultValues ? defaultValues.description : "",
+  const [inputs, setInputs] = useState({
+    amount: {
+      value: defaultValues
+        ? defaultValues.amount.toString().replaceAll(".", ",")
+        : "",
+      isValid: true,
+    },
+    date: {
+      value: defaultValues
+        ? defaultValues.date.toLocaleDateString("pt-BR")
+        : "",
+      isValid: true,
+    },
+    description: {
+      value: defaultValues ? defaultValues.description : "",
+      isValid: true,
+    },
   });
 
   const inputChangeHandler = (inputIdentifier, enteredValue) => {
-    setInputValues((currentInputValues) => {
+    setInputs((currentInputs) => {
       return {
-        ...currentInputValues,
-        [inputIdentifier]: enteredValue,
+        ...currentInputs,
+        [inputIdentifier]: { value: enteredValue, isValid: true },
       };
     });
   };
 
   const submitHandler = () => {
     const expenseData = {
-      amount: +inputValues.amount.replace(",", "."),
-      date: new Date(setFormattedDate(inputValues.date)),
-      description: inputValues.description,
+      amount: +inputs.amount.value.replace(",", "."),
+      date: new Date(setFormattedDate(inputs.date.value)),
+      description: inputs.description.value,
     };
 
     const amountIsValid = !isNaN(expenseData.amount) && expenseData.amount >= 0;
@@ -36,12 +47,32 @@ const ExpenseForm = ({ onCancel, onSubmit, isEditing, defaultValues }) => {
     const descriptionIsValid = expenseData.description.trim().length > 0;
 
     if (!amountIsValid || !dateIsValid || !descriptionIsValid) {
-      Alert.alert("Invalid input", "Double check your inputs, please");
+      setInputs((currentInputs) => {
+        return {
+          amount: {
+            value: currentInputs.amount.value,
+            isValid: amountIsValid,
+          },
+          date: {
+            value: currentInputs.date.value,
+            isValid: dateIsValid,
+          },
+          description: {
+            value: currentInputs.description.value,
+            isValid: descriptionIsValid,
+          },
+        };
+      });
       return;
     }
 
     onSubmit(expenseData);
   };
+
+  const formIsInvalid =
+    !inputs.amount.isValid ||
+    !inputs.date.isValid ||
+    !inputs.description.isValid;
 
   return (
     <View style={styles.formContainer}>
@@ -51,7 +82,7 @@ const ExpenseForm = ({ onCancel, onSubmit, isEditing, defaultValues }) => {
           textInputConfig={{
             keyboardType: "decimal-pad",
             onChangeText: inputChangeHandler.bind(this, "amount"),
-            value: inputValues.amount,
+            value: inputs.amount.value,
           }}
           style={styles.amountAndDateInput}
         />
@@ -62,7 +93,7 @@ const ExpenseForm = ({ onCancel, onSubmit, isEditing, defaultValues }) => {
             placeholderTextColor: GlobalStyles.colors.primary200,
             maxLength: 10,
             onChangeText: inputChangeHandler.bind(this, "date"),
-            value: inputValues.date,
+            value: inputs.date.value,
           }}
           style={styles.amountAndDateInput}
         />
@@ -72,9 +103,12 @@ const ExpenseForm = ({ onCancel, onSubmit, isEditing, defaultValues }) => {
         textInputConfig={{
           multiline: true,
           onChangeText: inputChangeHandler.bind(this, "description"),
-          value: inputValues.description,
+          value: inputs.description.value,
         }}
       />
+      {formIsInvalid && (
+        <Text>Input values are invalid! Check entered data, please.</Text>
+      )}
       <View style={styles.buttonsContainer}>
         <Button style={styles.button} mode="flat" onPress={onCancel}>
           Cancel
