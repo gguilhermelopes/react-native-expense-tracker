@@ -1,4 +1,10 @@
-import { Alert, StyleSheet, View, Text } from "react-native";
+import {
+  Alert,
+  StyleSheet,
+  View,
+  Text,
+  KeyboardAvoidingView,
+} from "react-native";
 import { useContext, useLayoutEffect, useState } from "react";
 
 import IconButton from "../components/UI/IconButton";
@@ -8,6 +14,7 @@ import ExpenseForm from "../components/ManageExpense/ExpenseForm";
 import { deleteExpense, storeExpense, updateExpense } from "../util/http";
 import Loading from "../components/UI/Loading";
 import Error from "../components/UI/Error";
+import { ScrollView } from "react-native";
 
 const ManageExpense = ({ route, navigation }) => {
   const [loading, setLoading] = useState(false);
@@ -123,36 +130,43 @@ const ManageExpense = ({ route, navigation }) => {
   }
 
   return (
-    <View style={styles.container}>
-      {expenseDesc && <Text style={styles.title}>{expenseDesc}</Text>}
-      <ExpenseForm
-        isEditing={isEditing}
-        onCancel={cancelHandler}
-        onSubmit={confirmHandler}
-        defaultValues={selectedExpense}
-      />
-
-      {isEditing && (
-        <View style={styles.deleteContainer}>
-          <IconButton
-            name="trash"
-            size={36}
-            color={GlobalStyles.colors.error500}
-            onPress={deleteExpenseHandler}
+    <ScrollView style={styles.screen}>
+      <KeyboardAvoidingView style={styles.screen} behavior="position">
+        <View style={styles.container}>
+          {expenseDesc && <Text style={styles.title}>{expenseDesc}</Text>}
+          <ExpenseForm
+            isEditing={isEditing}
+            onCancel={cancelHandler}
+            onSubmit={confirmHandler}
+            defaultValues={selectedExpense}
           />
+
+          {isEditing && (
+            <View style={styles.deleteContainer}>
+              <IconButton
+                name="trash"
+                size={36}
+                color={GlobalStyles.colors.error500}
+                onPress={deleteExpenseHandler}
+              />
+            </View>
+          )}
         </View>
-      )}
-    </View>
+      </KeyboardAvoidingView>
+    </ScrollView>
   );
 };
 
 export default ManageExpense;
 
 const styles = StyleSheet.create({
+  screen: {
+    flex: 1,
+    backgroundColor: GlobalStyles.colors.primary50,
+  },
   container: {
     flex: 1,
     padding: 24,
-    backgroundColor: GlobalStyles.colors.primary50,
   },
   title: {
     fontFamily: "dm-sans-bold",
