@@ -4,13 +4,17 @@ import ExpensesOutput from "../components/ExpensesOutput/ExpensesOutput";
 import { ExpensesContext } from "../store/expenses-context";
 import { getDateMinusDays } from "../util/date";
 import { getExpenses } from "../util/http";
+import Loading from "../components/UI/Loading";
 
 const RecentExpenses = () => {
+  const [loading, setLoading] = useState(true);
   const expensesContext = useContext(ExpensesContext);
 
   useEffect(() => {
     const getAsyncExpenses = async () => {
+      setLoading(true);
       const expensesData = await getExpenses();
+      setLoading(false);
       expensesContext.setExpenses(expensesData);
     };
     getAsyncExpenses();
@@ -24,6 +28,10 @@ const RecentExpenses = () => {
       return expense.date > date7DaysAgo;
     })
     .sort((a, b) => b.date - a.date);
+
+  if (loading) {
+    return <Loading />;
+  }
 
   return (
     <ExpensesOutput

@@ -1,13 +1,15 @@
 import { Alert, StyleSheet, View, Text } from "react-native";
-import { useContext, useLayoutEffect } from "react";
+import { useContext, useLayoutEffect, useState } from "react";
 
 import IconButton from "../components/UI/IconButton";
 import { ExpensesContext } from "../store/expenses-context";
 import { GlobalStyles } from "../constants/styles";
 import ExpenseForm from "../components/ManageExpense/ExpenseForm";
 import { deleteExpense, storeExpense, updateExpense } from "../util/http";
+import Loading from "../components/UI/Loading";
 
 const ManageExpense = ({ route, navigation }) => {
+  const [loading, setLoading] = useState(false);
   const expensesContext = useContext(ExpensesContext);
   const expenseId = route.params?.id;
   const expenseDesc = route.params?.description;
@@ -36,6 +38,7 @@ const ManageExpense = ({ route, navigation }) => {
           text: "Delete",
           style: "destructive",
           onPress: async () => {
+            setLoading(true);
             await deleteExpense(expenseId);
             expensesContext.deleteExpense(expenseId);
             Alert.alert("Expense deleted");
@@ -62,8 +65,10 @@ const ManageExpense = ({ route, navigation }) => {
             text: "Update",
             style: "default",
             onPress: async () => {
+              setLoading(true);
               expensesContext.updateExpense(expenseId, expenseData);
               await updateExpense(expenseId, expenseData);
+              setLoading(false);
               Alert.alert("Expense updated!");
               navigation.goBack();
             },
@@ -71,11 +76,21 @@ const ManageExpense = ({ route, navigation }) => {
         ]
       );
     } else {
+      setLoading(true);
       const id = await storeExpense(expenseData);
       expensesContext.addExpense({ ...expenseData, id });
       navigation.goBack();
     }
   };
+
+  if (loading) {
+    return (
+      <Loading
+        style={{ backgroundColor: GlobalStyles.colors.primary50 }}
+        color={GlobalStyles.colors.primary500}
+      />
+    );
+  }
 
   return (
     <View style={styles.container}>
