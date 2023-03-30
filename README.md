@@ -24,7 +24,7 @@ Projeto concluído! Abaixo as funcionalidades:
 - [x] Utilização de Context API e useReducer para lidar com dados
 - [x] Elaboração de inputs configuráveis
 - [x] Lidar com os inputs nas adições e edições dos dados
-- [x] Trabalhar com funções assíncronas e requisições HTTP para comunicação com o Back End
+- [x] Trabalhar com funções assíncronas e requisições HTTP para comunicação com o Back End (Firebase)
 - [x] Lidar com carregamento e erros dando todo feedback ao usuário
 
 ## 💻 Pré-requisitos
