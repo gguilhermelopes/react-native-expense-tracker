@@ -10,29 +10,28 @@
  &nbsp;&nbsp;
 <img src="./assets/doc-imgs/img3.png" alt="exemplo imagem" height="500px"  >
 
- 
-
 </p>
 
 > Aplicativo feito em React Native para armazenar e lidar com despesas pessoais.
 
 ### Ajustes e melhorias
 
-Projeto em desenvolvimento. Abaixo as implementações completas e que irão ser feitas:
+Projeto concluído! Abaixo as funcionalidades:
 
 - [x] Implementação básica dos componentes
 - [x] Utilização de elementos genéricos e reutilizáveis
 - [x] Desenvolvimento de navegação utilizando React Native Stack Navigator e React Bottom Tab Navigator
 - [x] Utilização de Context API e useReducer para lidar com dados
 - [x] Elaboração de inputs configuráveis
-- [ ] Lidar com os inputs nas adições e edições dos dados
-- [ ] Trabalhar com funções assíncronas e requisições HTTP para comunicação com o Back End
+- [x] Lidar com os inputs nas adições e edições dos dados
+- [x] Trabalhar com funções assíncronas e requisições HTTP para comunicação com o Back End
+- [x] Lidar com carregamento e erros dando todo feedback ao usuário
 
 ## 💻 Pré-requisitos
 
 Antes de começar, verifique se você atendeu aos seguintes requisitos:
 
-- Você instalou a versão mais recente de `Node.js` e tem, ao menos, um simulador de `Android` ou `iOS`
+- Você instalou a versão mais recente de `Node.js`, `git` e tem, ao menos, um simulador de `Android` ou `iOS`
 
 ## 🚀 Instalando Expense Tracker
 
