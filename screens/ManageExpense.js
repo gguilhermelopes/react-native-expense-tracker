@@ -7,9 +7,11 @@ import { GlobalStyles } from "../constants/styles";
 import ExpenseForm from "../components/ManageExpense/ExpenseForm";
 import { deleteExpense, storeExpense, updateExpense } from "../util/http";
 import Loading from "../components/UI/Loading";
+import Error from "../components/UI/Error";
 
 const ManageExpense = ({ route, navigation }) => {
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState();
   const expensesContext = useContext(ExpensesContext);
   const expenseId = route.params?.id;
   const expenseDesc = route.params?.description;
@@ -25,7 +27,7 @@ const ManageExpense = ({ route, navigation }) => {
     });
   }, [navigation, isEditing]);
 
-  const deleteExpenseHandler = async () => {
+  const deleteExpenseHandler = () => {
     Alert.alert(
       "Are you sure?",
       `Do you really want to delete ${expenseDesc}? This can't be undone!`,
@@ -39,10 +41,15 @@ const ManageExpense = ({ route, navigation }) => {
           style: "destructive",
           onPress: async () => {
             setLoading(true);
-            await deleteExpense(expenseId);
-            expensesContext.deleteExpense(expenseId);
-            Alert.alert("Expense deleted");
-            navigation.goBack();
+            try {
+              await deleteExpense(expenseId);
+              expensesContext.deleteExpense(expenseId);
+              Alert.alert("Expense deleted");
+              navigation.goBack();
+            } catch (error) {
+              setLoading(false);
+              setError("Could not delete expense - please try again later!");
+            }
           },
         },
       ]
@@ -66,20 +73,29 @@ const ManageExpense = ({ route, navigation }) => {
             style: "default",
             onPress: async () => {
               setLoading(true);
-              expensesContext.updateExpense(expenseId, expenseData);
-              await updateExpense(expenseId, expenseData);
-              setLoading(false);
-              Alert.alert("Expense updated!");
-              navigation.goBack();
+              try {
+                await updateExpense(expenseId, expenseData);
+                expensesContext.updateExpense(expenseId, expenseData);
+                Alert.alert("Expense updated!");
+                navigation.goBack();
+              } catch (error) {
+                setError("Could not update expense - please try again later!");
+                setLoading(false);
+              }
             },
           },
         ]
       );
     } else {
       setLoading(true);
-      const id = await storeExpense(expenseData);
-      expensesContext.addExpense({ ...expenseData, id });
-      navigation.goBack();
+      try {
+        const id = await storeExpense(expenseData);
+        expensesContext.addExpense({ ...expenseData, id });
+        navigation.goBack();
+      } catch (error) {
+        setLoading(false);
+        setError("Could not add expense - please try again later!");
+      }
     }
   };
 
@@ -88,6 +104,20 @@ const ManageExpense = ({ route, navigation }) => {
       <Loading
         style={{ backgroundColor: GlobalStyles.colors.primary50 }}
         color={GlobalStyles.colors.primary500}
+      />
+    );
+  }
+
+  const handleError = () => {
+    setError(null);
+  };
+  if (error && !loading) {
+    return (
+      <Error
+        message={error}
+        style={{ backgroundColor: GlobalStyles.colors.primary50 }}
+        errorTextStyle={{ color: GlobalStyles.colors.error500 }}
+        onConfirm={handleError}
       />
     );
   }

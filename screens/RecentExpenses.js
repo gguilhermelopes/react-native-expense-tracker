@@ -5,17 +5,23 @@ import { ExpensesContext } from "../store/expenses-context";
 import { getDateMinusDays } from "../util/date";
 import { getExpenses } from "../util/http";
 import Loading from "../components/UI/Loading";
+import Error from "../components/UI/Error";
 
 const RecentExpenses = () => {
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState();
   const expensesContext = useContext(ExpensesContext);
 
   useEffect(() => {
     const getAsyncExpenses = async () => {
       setLoading(true);
-      const expensesData = await getExpenses();
+      try {
+        const expensesData = await getExpenses();
+        expensesContext.setExpenses(expensesData);
+      } catch (error) {
+        setError("Could not load expenses!");
+      }
       setLoading(false);
-      expensesContext.setExpenses(expensesData);
     };
     getAsyncExpenses();
   }, []);
@@ -31,6 +37,14 @@ const RecentExpenses = () => {
 
   if (loading) {
     return <Loading />;
+  }
+
+  const handleError = () => {
+    setError(null);
+  };
+
+  if (error && !loading) {
+    return <Error message={error} onConfirm={handleError} />;
   }
 
   return (

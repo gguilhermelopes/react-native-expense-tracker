@@ -151,6 +151,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     gap: 24,
+    marginTop: 12,
   },
   button: {
     minWidth: 120,
