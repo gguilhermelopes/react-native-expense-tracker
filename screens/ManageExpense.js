@@ -5,7 +5,7 @@ import IconButton from "../components/UI/IconButton";
 import { ExpensesContext } from "../store/expenses-context";
 import { GlobalStyles } from "../constants/styles";
 import ExpenseForm from "../components/ManageExpense/ExpenseForm";
-import { storeExpense } from "../util/http";
+import { deleteExpense, storeExpense, updateExpense } from "../util/http";
 
 const ManageExpense = ({ route, navigation }) => {
   const expensesContext = useContext(ExpensesContext);
@@ -23,7 +23,7 @@ const ManageExpense = ({ route, navigation }) => {
     });
   }, [navigation, isEditing]);
 
-  const deleteExpenseHandler = () => {
+  const deleteExpenseHandler = async () => {
     Alert.alert(
       "Are you sure?",
       `Do you really want to delete ${expenseDesc}? This can't be undone!`,
@@ -35,7 +35,8 @@ const ManageExpense = ({ route, navigation }) => {
         {
           text: "Delete",
           style: "destructive",
-          onPress: () => {
+          onPress: async () => {
+            await deleteExpense(expenseId);
             expensesContext.deleteExpense(expenseId);
             Alert.alert("Expense deleted");
             navigation.goBack();
@@ -49,12 +50,31 @@ const ManageExpense = ({ route, navigation }) => {
   };
   const confirmHandler = async (expenseData) => {
     if (isEditing) {
-      expensesContext.updateExpense(expenseId, expenseData);
+      Alert.alert(
+        "Edit expense",
+        `Do you really want to update ${expenseDesc}?`,
+        [
+          {
+            text: "Cancel",
+            style: "cancel",
+          },
+          {
+            text: "Update",
+            style: "default",
+            onPress: async () => {
+              expensesContext.updateExpense(expenseId, expenseData);
+              await updateExpense(expenseId, expenseData);
+              Alert.alert("Expense updated!");
+              navigation.goBack();
+            },
+          },
+        ]
+      );
     } else {
       const id = await storeExpense(expenseData);
       expensesContext.addExpense({ ...expenseData, id });
+      navigation.goBack();
     }
-    navigation.goBack();
   };
 
   return (
