@@ -38,7 +38,7 @@ Antes de começar, verifique se você atendeu aos seguintes requisitos:
 Para instalar o Expense Tracker, siga estas etapas:
 
 - Clone esse repositório com `git clone https://github.com/gguilhermelopes/react-native-expense-tracker`
-- `cd react-native-meals`
+- `cd react-native-expense-tracker`
 - Instale as dependências com `npm install`
 
 ## ☕ Usando Expense Tracker
